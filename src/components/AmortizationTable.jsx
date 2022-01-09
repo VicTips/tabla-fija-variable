@@ -22,6 +22,7 @@ function AmortizationTable({ rows, type }) {
           <TableRow>
             {headers.map((header) => (
               <TableCell
+                key={header}
                 align="center"
                 style={
                   type === "fixed"
