@@ -4,6 +4,7 @@ class Row {
     this.nper = nper;
     this.rate = rate;
   }
+
   pmtFixed() {
     let payment = "";
     if (this.loan && this.nper && this.rate !== "") {
@@ -37,6 +38,7 @@ class Row {
     }
     return rows;
   }
+
   pmtVariable() {
     let principal = "";
     if (this.loan && this.nper && this.rate !== "") {
