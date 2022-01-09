@@ -9,14 +9,18 @@ import {
 } from "./CustomFormats";
 
 function Inputs({ onChange }) {
-  const types = { fixed: "Cuota fija", variable: "Cuota variable" };
+  const types = [
+    { value: "fixed", label: "Cuota fija" },
+    { value: "variable", label: "Cuota variable" },
+  ];
   const [loan, setLoan] = useState("");
   const [nper, setNper] = useState("");
   const [rate, setRate] = useState("");
+  const [type, setType] = useState("fixed");
 
   useEffect(() => {
-    onChange(loan, nper, rate);
-  }, [onChange, loan, nper, rate]);
+    onChange(loan, nper, rate, type);
+  }, [onChange, loan, nper, rate, type]);
 
   return (
     <Box
@@ -32,7 +36,7 @@ function Inputs({ onChange }) {
         placeholder="$10,000,000"
         variant="outlined"
         label="Valor del crédito"
-        color="warning"
+        color="info"
         margin="normal"
         onChange={(e) => setLoan(e.target.value)}
         InputProps={{
@@ -45,7 +49,7 @@ function Inputs({ onChange }) {
         placeholder="12"
         variant="outlined"
         label="Número de periodos"
-        color="warning"
+        color="info"
         margin="normal"
         onChange={(e) => setNper(e.target.value)}
         InputProps={{
@@ -58,7 +62,7 @@ function Inputs({ onChange }) {
         placeholder="1.5%"
         variant="outlined"
         label="Tasa de interés"
-        color="warning"
+        color="info"
         margin="normal"
         onChange={(e) => setRate(e.target.value)}
         InputProps={{
@@ -68,14 +72,18 @@ function Inputs({ onChange }) {
       <TextField
         id="type"
         focused
+        select
         variant="outlined"
         label="Modalidad"
-        color="warning"
+        color="info"
         margin="normal"
+        value={type}
+        onChange={(e) => setType(e.target.value)}
+        style={{ textAlign: "center" }}
       >
         {types.map((option) => (
-          <MenuItem key={option.key} value={option.value}>
-            {option.value}
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
           </MenuItem>
         ))}
       </TextField>

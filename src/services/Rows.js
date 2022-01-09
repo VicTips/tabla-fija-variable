@@ -1,4 +1,4 @@
-class Row {
+class Rows {
   constructor(loan, nper, rate) {
     this.loan = loan;
     this.nper = nper;
@@ -8,11 +8,14 @@ class Row {
   pmtFixed() {
     let payment = "";
     if (this.loan && this.nper && this.rate !== "") {
-      payment = (this.loan * (this.rate / 100)) / (1 - (1 + (this.rate / 100) ** -this.nper));
+      payment =
+        (this.loan * (1 + this.rate / 100) ** this.nper * this.rate) /
+        100 /
+        ((1 + this.rate / 100) ** this.nper - 1);
     }
 
     let rows = [
-      { nper: 0, payment: 0, interest: 0, principal: 0, balance: this.loan },
+      { period: 0, payment: 0, interest: 0, principal: 0, balance: this.loan },
     ];
     if (this.loan && this.nper && this.rate !== "") {
       for (let period = 1; period <= this.nper; period++) {
@@ -21,18 +24,21 @@ class Row {
           payment: payment,
           interest:
             ((this.loan * (1 + this.rate / 100) ** (period - 1) -
-              (payment * ((1 + this.rate / 100) ** (period - 1) - 1)) / (this.rate / 100)) *
+              (payment * ((1 + this.rate / 100) ** (period - 1) - 1)) /
+                (this.rate / 100)) *
               this.rate) /
             100,
           principal:
             payment -
             ((this.loan * (1 + this.rate / 100) ** (period - 1) -
-              (payment * ((1 + this.rate / 100) ** (period - 1) - 1)) / (this.rate / 100)) *
+              (payment * ((1 + this.rate / 100) ** (period - 1) - 1)) /
+                (this.rate / 100)) *
               this.rate) /
               100,
           balance:
             this.loan * (1 + this.rate / 100) ** period -
-            (payment * ((1 + this.rate / 100) ** period - 1)) / (this.rate / 100),
+            (payment * ((1 + this.rate / 100) ** period - 1)) /
+              (this.rate / 100),
         });
       }
     }
@@ -52,8 +58,13 @@ class Row {
       for (let period = 1; period <= this.nper; period++) {
         rows.push({
           period: period,
-          payment: principal + (this.loan - (this.loan / this.nper) * (period - 1)) * this.rate / 100,
-          interest: (this.loan - (this.loan / this.nper) * (period - 1)) * this.rate / 100,
+          payment:
+            principal +
+            ((this.loan - (this.loan / this.nper) * (period - 1)) * this.rate) /
+              100,
+          interest:
+            ((this.loan - (this.loan / this.nper) * (period - 1)) * this.rate) /
+            100,
           principal: principal,
           balance: this.loan - (this.loan / this.nper) * period,
         });
@@ -62,3 +73,5 @@ class Row {
     return rows;
   }
 }
+
+export default Rows;
