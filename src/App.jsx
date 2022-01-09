@@ -28,7 +28,7 @@ function App() {
         </Box>
       </Box>
       <Box mt={{ xs: 2, sm: 3, md: 4, lg: 5 }}>
-        <AmortizationTable rows={type === "fixed" ? rows.pmtFixed() : rows.pmtVariable()}/>
+        <AmortizationTable rows={type === "fixed" ? rows.pmtFixed() : rows.pmtVariable()} type={type}/>
       </Box>
     </Box>
   );

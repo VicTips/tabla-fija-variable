@@ -7,7 +7,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-function AmortizationTable({ rows }) {
+function AmortizationTable({ rows, type }) {
+  let headers = ["Periodo", "Cuota", "Intereses", "Amortización", "Saldo"];
+
   let formatter = new Intl.NumberFormat("en", {
     style: "currency",
     currency: "USD",
@@ -18,21 +20,18 @@ function AmortizationTable({ rows }) {
       <Table sx={{ minWidth: 650 }} aria-label="amortization table">
         <TableHead>
           <TableRow>
-            <TableCell align="center">
-              <b>Periodo</b>
-            </TableCell>
-            <TableCell align="center">
-              <b>Cuota</b>
-            </TableCell>
-            <TableCell align="center">
-              <b>Intereses</b>
-            </TableCell>
-            <TableCell align="center">
-              <b>Amortización</b>
-            </TableCell>
-            <TableCell align="center">
-              <b>Saldo</b>
-            </TableCell>
+            {headers.map((header) => (
+              <TableCell
+                align="center"
+                style={
+                  type === "fixed"
+                    ? { backgroundColor: "#0288d1" }
+                    : { backgroundColor: "#ab47bc" }
+                }
+              >
+                <b>{header}</b>
+              </TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>

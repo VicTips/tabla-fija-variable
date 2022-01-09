@@ -36,7 +36,7 @@ function Inputs({ onChange }) {
         placeholder="$10,000,000"
         variant="outlined"
         label="Valor del crédito"
-        color="info"
+        color={type === "fixed" ? "primary" : "secondary"}
         margin="normal"
         onChange={(e) => setLoan(e.target.value)}
         InputProps={{
@@ -49,7 +49,7 @@ function Inputs({ onChange }) {
         placeholder="12"
         variant="outlined"
         label="Número de periodos"
-        color="info"
+        color={type === "fixed" ? "primary" : "secondary"}
         margin="normal"
         onChange={(e) => setNper(e.target.value)}
         InputProps={{
@@ -62,7 +62,7 @@ function Inputs({ onChange }) {
         placeholder="1.5%"
         variant="outlined"
         label="Tasa de interés"
-        color="info"
+        color={type === "fixed" ? "primary" : "secondary"}
         margin="normal"
         onChange={(e) => setRate(e.target.value)}
         InputProps={{
@@ -75,7 +75,7 @@ function Inputs({ onChange }) {
         select
         variant="outlined"
         label="Modalidad"
-        color="info"
+        color={type === "fixed" ? "primary" : "secondary"}
         margin="normal"
         value={type}
         onChange={(e) => setType(e.target.value)}
