@@ -11,16 +11,19 @@ import {
 function Inputs({ onChange }) {
   const types = [
     { value: "fixed", label: "Cuota fija" },
-    { value: "variable", label: "Cuota variable" },
+    { value: "variable", label: "Abono constate" },
+    { value: "linearGrowth", label: "Lineal creciente" },
+    { value: "linearDecay", label: "Lineal decreciente" },
   ];
   const [loan, setLoan] = useState("");
   const [nper, setNper] = useState("");
   const [rate, setRate] = useState("");
+  const [gradient, setGradient] = useState("");
   const [type, setType] = useState("fixed");
 
   useEffect(() => {
-    onChange(loan, nper, rate, type);
-  }, [onChange, loan, nper, rate, type]);
+    onChange(loan, gradient, nper, rate, type);
+  }, [onChange, loan, gradient, nper, rate, type]);
 
   return (
     <Box
@@ -36,9 +39,46 @@ function Inputs({ onChange }) {
         placeholder="$10,000,000"
         variant="outlined"
         label="Valor del crédito"
-        color={type === "fixed" ? "primary" : "secondary"}
+        color={
+          type === "fixed"
+            ? "primary"
+            : type === "variable"
+            ? "secondary"
+            : type === "linearGrowth"
+            ? "success"
+            : "error"
+        }
         margin="normal"
         onChange={(e) => setLoan(e.target.value)}
+        InputProps={{
+          inputComponent: FormatCurrency,
+        }}
+      />
+      <TextField
+        id="gradient"
+        focused
+        placeholder="$100,000"
+        variant="outlined"
+        label="Gradiente"
+        color={
+          type === "fixed"
+            ? "primary"
+            : type === "variable"
+            ? "secondary"
+            : type === "linearGrowth"
+            ? "success"
+            : "error"
+        }
+        margin="normal"
+        style={{
+          display:
+            type === "linearGrowth"
+              ? "flex"
+              : type === "linearDecay"
+              ? "flex"
+              : "none",
+        }}
+        onChange={(e) => setGradient(e.target.value)}
         InputProps={{
           inputComponent: FormatCurrency,
         }}
@@ -49,7 +89,15 @@ function Inputs({ onChange }) {
         placeholder="12"
         variant="outlined"
         label="Número de periodos"
-        color={type === "fixed" ? "primary" : "secondary"}
+        color={
+          type === "fixed"
+            ? "primary"
+            : type === "variable"
+            ? "secondary"
+            : type === "linearGrowth"
+            ? "success"
+            : "error"
+        }
         margin="normal"
         onChange={(e) => setNper(e.target.value)}
         InputProps={{
@@ -62,7 +110,15 @@ function Inputs({ onChange }) {
         placeholder="1.5%"
         variant="outlined"
         label="Tasa de interés"
-        color={type === "fixed" ? "primary" : "secondary"}
+        color={
+          type === "fixed"
+            ? "primary"
+            : type === "variable"
+            ? "secondary"
+            : type === "linearGrowth"
+            ? "success"
+            : "error"
+        }
         margin="normal"
         onChange={(e) => setRate(e.target.value)}
         InputProps={{
@@ -75,7 +131,15 @@ function Inputs({ onChange }) {
         select
         variant="outlined"
         label="Modalidad"
-        color={type === "fixed" ? "primary" : "secondary"}
+        color={
+          type === "fixed"
+            ? "primary"
+            : type === "variable"
+            ? "secondary"
+            : type === "linearGrowth"
+            ? "success"
+            : "error"
+        }
         margin="normal"
         value={type}
         onChange={(e) => setType(e.target.value)}

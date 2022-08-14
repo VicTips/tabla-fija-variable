@@ -27,7 +27,11 @@ function AmortizationTable({ rows, type }) {
                 style={
                   type === "fixed"
                     ? { backgroundColor: "#0288d1" }
-                    : { backgroundColor: "#ab47bc" }
+                    : type === "variable"
+                    ? { backgroundColor: "#ab47bc" }
+                    : type === "linearGrowth"
+                    ? { backgroundColor: "#388e3c" }
+                    : { backgroundColor: "#f44336" }
                 }
               >
                 <b>{header}</b>
