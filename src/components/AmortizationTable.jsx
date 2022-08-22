@@ -16,7 +16,7 @@ function AmortizationTable({ rows, type }) {
   });
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} id="tblLoan">
       <Table sx={{ minWidth: 650 }} aria-label="amortization table">
         <TableHead>
           <TableRow>
