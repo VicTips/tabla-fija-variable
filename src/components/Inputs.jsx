@@ -1,29 +1,30 @@
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setLoan,
+  setNper,
+  setRate,
+  setGradient,
+  changeType,
+} from "../redux/tableSlice";
 import {
   FormatCurrency,
   FormatPercentage,
   FormatPeriods,
 } from "./CustomFormats";
 
-function Inputs({ onChange }) {
+const Inputs = () => {
   const types = [
     { value: "fixed", label: "Cuota fija" },
     { value: "variable", label: "Abono constate" },
     { value: "linearGrowth", label: "Lineal creciente" },
     { value: "linearDecay", label: "Lineal decreciente" },
   ];
-  const [loan, setLoan] = useState("");
-  const [nper, setNper] = useState("");
-  const [rate, setRate] = useState("");
-  const [gradient, setGradient] = useState("");
-  const [type, setType] = useState("fixed");
-
-  useEffect(() => {
-    onChange(loan, gradient, nper, rate, type);
-  }, [onChange, loan, gradient, nper, rate, type]);
+  const dispatch = useDispatch();
+  const type = useSelector((state) => state.table.type);
 
   return (
     <Box
@@ -49,7 +50,7 @@ function Inputs({ onChange }) {
             : "error"
         }
         margin="normal"
-        onChange={(e) => setLoan(e.target.value)}
+        onChange={(e) => dispatch(setLoan(e.target.value))}
         InputProps={{
           inputComponent: FormatCurrency,
         }}
@@ -78,7 +79,7 @@ function Inputs({ onChange }) {
               ? "flex"
               : "none",
         }}
-        onChange={(e) => setGradient(e.target.value)}
+        onChange={(e) => dispatch(setGradient(e.target.value))}
         InputProps={{
           inputComponent: FormatCurrency,
         }}
@@ -99,7 +100,7 @@ function Inputs({ onChange }) {
             : "error"
         }
         margin="normal"
-        onChange={(e) => setNper(e.target.value)}
+        onChange={(e) => dispatch(setNper(e.target.value))}
         InputProps={{
           inputComponent: FormatPeriods,
         }}
@@ -120,7 +121,7 @@ function Inputs({ onChange }) {
             : "error"
         }
         margin="normal"
-        onChange={(e) => setRate(e.target.value)}
+        onChange={(e) => dispatch(setRate(e.target.value))}
         InputProps={{
           inputComponent: FormatPercentage,
         }}
@@ -142,7 +143,7 @@ function Inputs({ onChange }) {
         }
         margin="normal"
         value={type}
-        onChange={(e) => setType(e.target.value)}
+        onChange={(e) => dispatch(changeType(e.target.value))}
         style={{ textAlign: "center" }}
       >
         {types.map((option) => (
@@ -153,6 +154,6 @@ function Inputs({ onChange }) {
       </TextField>
     </Box>
   );
-}
+};
 
 export default Inputs;
